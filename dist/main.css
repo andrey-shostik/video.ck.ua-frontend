@@ -1,0 +1,15 @@
+.app {
+  margin: 0 auto;
+  width: 760px;
+  height: 500px; }
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+
+.flex-element {
+  padding: 10px; }
+
+/*# sourceMappingURL=main.css.map*/
