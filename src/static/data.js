@@ -4,7 +4,7 @@ const data = [
     name: 'Интерстеллар',
     originalName: 'Interstellar',
     country: 'США, Великобритания',
-    releaseData: '2014',
+    releaseDate: '2014',
     during: '169 мин.'
   },
   {
@@ -12,7 +12,7 @@ const data = [
     name: 'Плата за проезд',
     originalName: 'Fare',
     country: 'США',
-    releaseData: '2016',
+    releaseDate: '2016',
     during: '75 мин.'
   },
   {
@@ -20,7 +20,7 @@ const data = [
     name: 'Мина',
     originalName: 'Mine',
     country: 'США, Италия, Испания',
-    releaseData: '2016',
+    releaseDate: '2016',
     during: '106 мин.'
   },
   {
@@ -28,7 +28,7 @@ const data = [
     name: 'Плата за проезд',
     originalName: 'Fare',
     country: 'США',
-    releaseData: '2016',
+    releaseDate: '2016',
     during: '75 мин.'
   },
   {
@@ -36,7 +36,7 @@ const data = [
     name: 'Мина',
     originalName: 'Mine',
     country: 'США, Италия, Испания',
-    releaseData: '2016',
+    releaseDate: '2016',
     during: '106 мин.'
   },
   {

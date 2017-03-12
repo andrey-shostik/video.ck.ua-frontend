@@ -1,12 +1,15 @@
+import Immutable from 'immutable';
+import createReducer from '../utils/utils';
+import { MOVIES_GET_SUCCESS } from './content.Actions';
+
 const initialState = {
   movies: []
 };
 
-export default function testReducer(state = initialState, action) {
-  if (action.type === 'CONTENT_GET_SUCCESS') {
-    console.log(action);
-    return { movies: [{ movie: 'movie' }] };
-  }
-
-  return state;
+function getMovies(state, { payload }) {
+  return state.set('movies', payload);
 }
+
+export default createReducer({
+  [MOVIES_GET_SUCCESS]: getMovies
+}, Immutable.fromJS(initialState));

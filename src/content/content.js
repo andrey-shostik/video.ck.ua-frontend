@@ -1,20 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Section from '../components/section/section';
-import data from '../static/data';
+import { bindActionCreators } from 'redux';
+import Section from '../components/listContainer/listContainer';
+// import data from '../static/data';
+import { getMovies } from './content.Actions';
 
 class Content extends Component {
+  componentWillMount() {
+    const { boundGetContent } = this.props;
+    boundGetContent();
+  }
+
   render() {
-    console.log(this.props.testStore);
+    const { movies } = this.props;
 
     return (
-      <Section data={data}/>
+      <Section data={movies}/>
     );
   }
 }
 
+Content.propTypes = {
+  movies: PropTypes.object,
+  boundGetContent: PropTypes.func
+};
+
 export default connect((store) => {
   return {
-    testStore: store
+    movies: store.content.get('movies')
+  };
+}, (dispatch) => {
+  return {
+    boundGetContent: bindActionCreators(getMovies, dispatch)
   };
 })(Content);
