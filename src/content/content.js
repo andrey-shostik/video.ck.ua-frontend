@@ -4,6 +4,15 @@ import { bindActionCreators } from 'redux';
 import Section from '../components/listContainer/listContainer';
 // import data from '../static/data';
 import { getMovies } from './content.Actions';
+import './content.scss';
+
+const UserNotAuthorized = () => {
+  return (
+    <div className="flex-container user-not-authorized">
+      <h1> You are not authorized, please sign in </h1>
+    </div>
+  );
+};
 
 class Content extends Component {
   componentWillMount() {
@@ -14,9 +23,15 @@ class Content extends Component {
   render() {
     const { movies } = this.props;
 
-    return (
-      <Section data={movies}/>
-    );
+    if (localStorage.getItem('id_token')) {
+      return (
+        <Section data={movies}/>
+      );
+    } else {
+      return (
+        <UserNotAuthorized/>
+      );
+    }
   }
 }
 
@@ -34,3 +49,4 @@ export default connect((store) => {
     boundGetContent: bindActionCreators(getMovies, dispatch)
   };
 })(Content);
+

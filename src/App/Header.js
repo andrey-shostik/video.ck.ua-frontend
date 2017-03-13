@@ -1,32 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
+
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      logged: false
-    };
-  }
-
   render() {
     return (
       <div>
         <AppBar
           title="App"
-          iconElementRight={this.state.logged ? <Logged/> : <Login/>}
+          iconElementRight={localStorage.getItem('id_token') ? <Logged router={this.props.router}/> : <Login/>}
         />
       </div>
     );
   }
 }
+
+Header.propTypes = {
+  router: PropTypes.object
+};
 
 const Login = (props) => {
   return (
@@ -36,10 +33,14 @@ const Login = (props) => {
   );
 };
 
-const Logged = (props) => {
+const Logged = ({ router }) => {
+  const signOut = () => {
+    localStorage.removeItem('id_token');
+    router.push('/');
+  };
+
   return (
     <IconMenu
-      {...props}
       iconButtonElement={
         <IconButton><MoreVertIcon color="white"/></IconButton>
       }
@@ -48,9 +49,13 @@ const Logged = (props) => {
     >
       <MenuItem primaryText="Refresh"/>
       <MenuItem primaryText="Help"/>
-      <MenuItem primaryText="Sign out"/>
+      <MenuItem primaryText="Sign out" onClick={signOut}/>
     </IconMenu>
   );
 };
 
-export default Header;
+Logged.propsTypes = {
+  router: PropTypes.object
+};
+
+export default withRouter(Header);
