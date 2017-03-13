@@ -24,8 +24,8 @@ class Movie extends Component {
 }
 
 Movie.propTypes = {
-  movie: PropTypes.array,
-  boundGetContent: PropTypes.function
+  movie: PropTypes.object,
+  boundGetContent: PropTypes.func
 };
 
 export default connect((store, ownProps) => {

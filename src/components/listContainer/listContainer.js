@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import './listContainer.scss';
 import Item from '../item/item';
 
@@ -21,7 +22,10 @@ class listContainer extends Component {
 }
 
 listContainer.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.oneOfType([
+    PropTypes.array,
+    ImmutablePropTypes.list
+  ])
 };
 
 export default listContainer;

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Section from '../components/listContainer/listContainer';
-// import data from '../static/data';
 import { getMovies } from './content.Actions';
 import './content.scss';
 
@@ -36,7 +36,10 @@ class Content extends Component {
 }
 
 Content.propTypes = {
-  movies: PropTypes.object,
+  movies: PropTypes.oneOfType([
+    PropTypes.array,
+    ImmutablePropTypes.list
+  ]),
   boundGetContent: PropTypes.func
 };
 
