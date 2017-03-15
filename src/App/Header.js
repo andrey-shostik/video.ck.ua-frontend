@@ -1,61 +1,31 @@
 import React, { Component, PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import { Link, withRouter } from 'react-router';
-
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { signOut } from '../signIn/signIn.Actions';
+import Logged from './components/logged';
+import Login from './components/login';
 
 class Header extends Component {
   render() {
+    const { router, boundSignOut } = this.props;
     return (
-      <div>
-        <AppBar
-          title="App"
-          iconElementRight={localStorage.getItem('id_token') ? <Logged router={this.props.router}/> : <Login/>}
-        />
-      </div>
+      <AppBar
+        title="App"
+        iconElementRight={localStorage.getItem('id_token') ? <Logged router={router} boundSignOut={boundSignOut}/> : <Login/>}
+      />
     );
   }
 }
 
 Header.propTypes = {
-  router: PropTypes.object
+  router: PropTypes.object,
+  boundSignOut: PropTypes.func
 };
 
-const Login = (props) => {
-  return (
-    <Link to="/signin">
-      <FlatButton {...props} label="Sign In" style={{ color: 'white', marginTop: '6px' }}/>
-    </Link>
-  );
-};
-
-const Logged = ({ router }) => {
-  const signOut = () => {
-    localStorage.removeItem('id_token');
-    router.push('/');
+export default connect(null, (dispatch) => {
+  return {
+    boundSignOut: bindActionCreators(signOut, dispatch)
   };
-
-  return (
-    <IconMenu
-      iconButtonElement={
-        <IconButton><MoreVertIcon color="white"/></IconButton>
-      }
-      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-    >
-      <MenuItem primaryText="Refresh"/>
-      <MenuItem primaryText="Help"/>
-      <MenuItem primaryText="Sign out" onClick={signOut}/>
-    </IconMenu>
-  );
-};
-
-Logged.propsTypes = {
-  router: PropTypes.object
-};
-
-export default withRouter(Header);
+})(withRouter(Header));

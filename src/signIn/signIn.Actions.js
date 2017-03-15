@@ -1,6 +1,7 @@
 import { CALL_API } from 'redux-api-middleware';
 
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+export const SIGN_OUT = 'SIGN_OUT';
 
 export const signIn = (user) => {
   return {
@@ -13,5 +14,11 @@ export const signIn = (user) => {
       body: JSON.stringify(user),
       types: ['REQUEST', SIGN_IN_SUCCESS, 'FAILURE']
     }
+  };
+};
+
+export const signOut = () => {
+  return {
+    type: SIGN_OUT
   };
 };

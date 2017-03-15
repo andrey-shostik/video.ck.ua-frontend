@@ -14,8 +14,9 @@ class SignIn extends Component {
   }
 
   componentWillReceiveProps({ signInState }) {
-    if (signInState.get('signIn').token) {
-      localStorage.setItem('id_token', signInState.get('signIn').token);
+    if (signInState.get('token') && signInState.get('token')) {
+      localStorage.setItem('id_token', signInState.get('token'));
+      localStorage.setItem('groups', signInState.get('groups').join(' '));
       this.props.router.push('/');
     }
   }

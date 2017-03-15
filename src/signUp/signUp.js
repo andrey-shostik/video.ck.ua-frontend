@@ -8,16 +8,14 @@ import { signUp } from './signUp.Actions';
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    this.onSignUp = this.onSignUp.bind(this);
-  }
-
-  onSignUp(e) {
-    const { boundSignUp, signUpState } = this.props;
-    boundSignUp({
-      username: this.usernameField.input.value,
-      email: this.emailField.input.value,
-      password: this.passwordField.input.value
-    });
+    this.onSignUp = () => {
+      const { boundSignUp, signUpState } = this.props;
+      boundSignUp({
+        username: this.usernameField.input.value,
+        email: this.emailField.input.value,
+        password: this.passwordField.input.value
+      });
+    };
   }
 
   componentWillReceiveProps({ signUpState }) {

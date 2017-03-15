@@ -5,25 +5,20 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Section from '../components/listContainer/listContainer';
 import { getMovies } from './content.Actions';
 import './content.scss';
-
-const UserNotAuthorized = () => {
-  return (
-    <div className="flex-container user-not-authorized">
-      <h1> You are not authorized, please sign in </h1>
-    </div>
-  );
-};
+import UserNotAuthorized from '../components/userNotAuthorized/userNotAuthorized';
 
 class Content extends Component {
   componentWillMount() {
-    const { boundGetContent } = this.props;
-    boundGetContent();
+    const { boundGetContent, token } = this.props;
+    if (token) {
+      boundGetContent(token);
+    }
   }
 
   render() {
-    const { movies } = this.props;
+    const { movies, token } = this.props;
 
-    if (localStorage.getItem('id_token')) {
+    if (token) {
       return (
         <Section data={movies}/>
       );
@@ -40,12 +35,14 @@ Content.propTypes = {
     PropTypes.array,
     ImmutablePropTypes.list
   ]),
-  boundGetContent: PropTypes.func
+  boundGetContent: PropTypes.func,
+  token: PropTypes.string
 };
 
 export default connect((store) => {
   return {
-    movies: store.content.get('movies')
+    movies: store.content.get('movies'),
+    token: store.signIn.get('token')
   };
 }, (dispatch) => {
   return {

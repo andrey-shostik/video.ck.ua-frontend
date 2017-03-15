@@ -7,7 +7,7 @@ import Item from '../item/item';
 class Movie extends Component {
   componentWillMount() {
     const { boundGetContent } = this.props;
-    boundGetContent();
+    boundGetContent(localStorage.getItem('id_token'));
   }
 
   render() {
