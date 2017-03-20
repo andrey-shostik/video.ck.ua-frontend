@@ -80,12 +80,17 @@ class FormMovie extends Component {
 
     return (
       <div className="flex-container form-container">
-        <div className="flex-container app-form" style={{ height: '550px !important' }}>
+        <div className="flex-container movie-form">
 
           { this.mapMovieFileds(movie.toJS()) }
 
           <Link to="/administration/admin" style={{ width: 'inherit' }}>
-            <RaisedButton label={this.getAction()} onTouchTap={this.onAction} fullWidth className="form-btn"/>
+            <RaisedButton
+              label={this.getAction() === 'new' ? 'Create' : 'Save'}
+              onTouchTap={this.onAction}
+              fullWidth
+              className="form-btn"
+            />
           </Link>
 
           <RaisedButton onTouchTap={() => { router.goBack(); }} label="Back" fullWidth className="form-btn"/>

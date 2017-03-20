@@ -1,18 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import DataActionsMenu from './dataActionsMenu/dataActionsMenu';
-import { getMovies } from '../../content/Content.Actions';
 
 class MoviesTable extends Component {
   state = { show: false };
 
   componentWillMount() {
-    const { boundGetMovies } = this.props;
-    boundGetMovies();
+    const { boundGetData } = this.props;
+    boundGetData();
   }
 
   onRowSelected = (e, second, third) => {
@@ -23,9 +20,9 @@ class MoviesTable extends Component {
     }
   }
 
-  mapTableColumns = (movie) => {
-    const tableColumns = Object.keys(movie).map((field, i) => {
-      if (field[0] !== '_') {
+  mapTableColumns = (object) => {
+    const tableColumns = Object.keys(object).map((field, i) => {
+      if (field[0] !== '_' && field !== 'password') {
         return <TableHeaderColumn key={i} style={{ fontSize: '14px' }}>{field}</TableHeaderColumn>;
       } else {
         return null;
@@ -34,25 +31,55 @@ class MoviesTable extends Component {
     return tableColumns;
   };
 
-  mapTableRows = (movies) => {
+  mapMovies = (movies) => {
     const tableRows = movies.map((object) => {
       const cells = Object.entries(object).map((arr, i) => {
         // [0: 'property', 1: 'value']
         if (arr[0][0] !== '_') {
-          if (arr[0] === 'img') {
-            return (
-              <TableRowColumn key={i}>
-                <img alt="movie" height="110px" width="80px" src={arr[1]}/>
-              </TableRowColumn>
-            );
-          } else if (arr[0] === 'name') {
-            return (
-              <TableRowColumn style={{ fontSize: '14px' }} key={i} >
-                <Link to={`/movies/${object._id}`}> {arr[1]} </Link>
-              </TableRowColumn>
-            );
-          } else {
-            return <TableRowColumn style={{ fontSize: '14px' }} key={i} >{arr[1]}</TableRowColumn>;
+          switch (arr[0]) {
+            case 'img':
+              return (
+                <TableRowColumn key={i}>
+                  <img alt="movie" height="110px" width="80px" src={arr[1]}/>
+                </TableRowColumn>
+              );
+            case 'name':
+              return (
+                <TableRowColumn style={{ fontSize: '14px' }} key={i} >
+                  <Link to={`/movies/${object._id}`}> {arr[1]} </Link>
+                </TableRowColumn>
+              );
+            default:
+              return <TableRowColumn style={{ fontSize: '14px' }} key={i} >{arr[1]}</TableRowColumn>;
+          }
+        } else {
+          return false;
+        }
+      });
+      return <TableRow key={object._id}>{cells}</TableRow>;
+    });
+
+    return tableRows;
+  };
+
+  mapUsers = (users) => {
+    const tableRows = users.map((object) => {
+      const cells = Object.entries(object).map((arr, i) => {
+        // [0: 'property', 1: 'value']
+        if (arr[0][0] !== '_' && arr[0] !== 'password') {
+          switch (arr[0]) {
+            case 'groups':
+              return (
+                <TableRowColumn style={{ fontSize: '14px' }} key={i} > {arr[1].join(' ')} </TableRowColumn>
+              );
+            case 'username':
+              return (
+                <TableRowColumn style={{ fontSize: '14px' }} key={i} >
+                  <Link to={`/users/${object._id}`}> {arr[1]} </Link>
+                </TableRowColumn>
+              );
+            default:
+              return <TableRowColumn style={{ fontSize: '14px' }} key={i} >{arr[1]}</TableRowColumn>;
           }
         } else {
           return false;
@@ -65,25 +92,26 @@ class MoviesTable extends Component {
   };
 
   render() {
-    const { movies, boundGetMovies } = this.props;
+    const { data, boundGetData, dataType, boundRemoveData } = this.props;
     const { show, selected } = this.state;
 
     return (
       <div>
         <DataActionsMenu
           show={show}
-          selected={movies.toJS()[selected]}
-          dataType="movies"
-          boundGetMovies={boundGetMovies}
+          selected={data.toJS()[selected]}
+          dataType={dataType}
+          boundGetData={boundGetData}
+          boundRemoveData={boundRemoveData}
         />
         <Table onRowSelection={this.onRowSelected}>
           <TableHeader>
             <TableRow>
-              { this.mapTableColumns(movies.toJS()[0]) }
+              { this.mapTableColumns(data.toJS()[0]) }
             </TableRow>
           </TableHeader>
           <TableBody>
-            { this.mapTableRows(movies.toJS()) }
+            { dataType === 'movies' ? this.mapMovies(data.toJS()) : this.mapUsers(data.toJS()) }
           </TableBody>
         </Table>
       </div>
@@ -92,16 +120,10 @@ class MoviesTable extends Component {
 }
 
 MoviesTable.propTypes = {
-  movies: ImmutablePropTypes.list,
-  boundGetMovies: PropTypes.func
+  data: ImmutablePropTypes.list,
+  boundGetData: PropTypes.func,
+  dataType: PropTypes.string,
+  boundRemoveData: PropTypes.func
 };
 
-export default connect((store) => {
-  return {
-    movies: store.content.get('movies')
-  };
-}, (dispatch) => {
-  return {
-    boundGetMovies: bindActionCreators(getMovies, dispatch)
-  };
-})(MoviesTable);
+export default MoviesTable;

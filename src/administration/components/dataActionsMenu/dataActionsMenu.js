@@ -1,14 +1,11 @@
 import React, { PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { removeMovie } from '../../../movie/Movie.Actions';
 import './dataActionsMenu.scss';
 
-const DataActionsMenu = ({ show, boundRemoveMovie, dataType, selected, boundGetMovies }, context) => {
+const DataActionsMenu = ({ show, boundRemoveData, dataType, selected, boundGetData }, context) => {
   const onRemoveAction = () => {
-    boundRemoveMovie(selected._id).then(() => {
-      boundGetMovies();
+    boundRemoveData(selected._id).then(() => {
+      boundGetData();
     });
   };
 
@@ -25,9 +22,13 @@ const DataActionsMenu = ({ show, boundRemoveMovie, dataType, selected, boundGetM
       { show
         ?
           <div className="data-actions-menu flex-container">
-
-            <RaisedButton label="Edit" onTouchTap={onEditAction}/>
-            <RaisedButton label="Remove" onTouchTap={onRemoveAction}/>
+            { dataType !== 'users'
+              ?
+                <RaisedButton label="Edit" onTouchTap={onEditAction} style={{ width: '50%', marginRight: '5px' }}/>
+              :
+                null
+            }
+            <RaisedButton label="Remove" onTouchTap={onRemoveAction} style={{ width: '50%', marginLeft: '5px' }}/>
           </div>
         :
           null
@@ -47,10 +48,10 @@ const DataActionsMenu = ({ show, boundRemoveMovie, dataType, selected, boundGetM
 
 DataActionsMenu.propTypes = {
   show: PropTypes.bool,
-  boundRemoveMovie: PropTypes.func,
+  boundRemoveData: PropTypes.func,
   dataType: PropTypes.string,
   selected: PropTypes.object,
-  boundGetMovies: PropTypes.func
+  boundGetData: PropTypes.func
 };
 
 
@@ -58,8 +59,4 @@ DataActionsMenu.contextTypes = {
   router: PropTypes.object
 };
 
-export default connect(null, (dispatch) => {
-  return {
-    boundRemoveMovie: bindActionCreators(removeMovie, dispatch)
-  };
-})(DataActionsMenu);
+export default DataActionsMenu;
