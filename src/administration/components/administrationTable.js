@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import DataActionsMenu from './dataActionsMenu/dataActionsMenu';
 
-class MoviesTable extends Component {
+class AdministrationTable extends Component {
   state = { show: false };
 
   componentWillMount() {
@@ -92,7 +92,7 @@ class MoviesTable extends Component {
   };
 
   render() {
-    const { data, boundGetData, dataType, boundRemoveData } = this.props;
+    const { data, boundGetData, dataType, boundRemoveData, group } = this.props;
     const { show, selected } = this.state;
 
     return (
@@ -103,6 +103,7 @@ class MoviesTable extends Component {
           dataType={dataType}
           boundGetData={boundGetData}
           boundRemoveData={boundRemoveData}
+          group={group}
         />
         <Table onRowSelection={this.onRowSelected}>
           <TableHeader>
@@ -119,11 +120,12 @@ class MoviesTable extends Component {
   }
 }
 
-MoviesTable.propTypes = {
+AdministrationTable.propTypes = {
   data: ImmutablePropTypes.list,
   boundGetData: PropTypes.func,
   dataType: PropTypes.string,
-  boundRemoveData: PropTypes.func
+  boundRemoveData: PropTypes.func,
+  group: PropTypes.string
 };
 
-export default MoviesTable;
+export default AdministrationTable;

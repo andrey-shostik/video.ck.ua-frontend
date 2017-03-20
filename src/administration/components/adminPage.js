@@ -3,7 +3,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import { bindActionCreators } from 'redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-import MoviesTable from './moviesTable';
+import AdministrationTable from './administrationTable';
 import './adminPage.scss';
 import { getMovies } from '../../content/Content.Actions';
 import { removeMovie } from '../../movie/Movie.Actions';
@@ -17,19 +17,21 @@ class AdminPage extends Component {
       <div className="container">
         <Tabs>
           <Tab label="Movies" >
-            <MoviesTable
+            <AdministrationTable
               boundGetData={boundGetMovies}
               boundRemoveData={boundRemoveMovie}
               dataType="movies"
               data={movies}
+              group="admin"
             />
           </Tab>
           <Tab label="Users" >
-            <MoviesTable
+            <AdministrationTable
               boundGetData={boundGetUsers}
               boundRemoveData={boundRemoveUser}
               dataType="users"
               data={users}
+              group="admin"
             />
           </Tab>
         </Tabs>

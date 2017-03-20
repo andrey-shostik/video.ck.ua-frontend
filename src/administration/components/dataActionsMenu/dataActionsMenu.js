@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import './dataActionsMenu.scss';
 
-const DataActionsMenu = ({ show, boundRemoveData, dataType, selected, boundGetData }, context) => {
+const DataActionsMenu = ({ show, boundRemoveData, dataType, selected, boundGetData, group }, context) => {
   const onRemoveAction = () => {
     boundRemoveData(selected._id).then(() => {
       boundGetData();
@@ -10,11 +10,11 @@ const DataActionsMenu = ({ show, boundRemoveData, dataType, selected, boundGetDa
   };
 
   const onNewAction = () => {
-    context.router.push(`/administration/admin/${dataType}/new`);
+    context.router.push(`/administration/${group}/${dataType}/new`);
   };
 
   const onEditAction = () => {
-    context.router.push(`/administration/admin/${dataType}/${selected._id}/edit`);
+    context.router.push(`/administration/${group}/${dataType}/${selected._id}/edit`);
   };
 
   return (
@@ -51,7 +51,8 @@ DataActionsMenu.propTypes = {
   boundRemoveData: PropTypes.func,
   dataType: PropTypes.string,
   selected: PropTypes.object,
-  boundGetData: PropTypes.func
+  boundGetData: PropTypes.func,
+  group: PropTypes.string
 };
 
 
