@@ -1,17 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-// import ImmutablePropTypes from 'react-immutable-proptypes';
 import ModeratorPage from './components/moderatorPage';
 import AdminPage from './components/adminPage';
-// import { getMovies } from '../content/Content.Actions';
-// import { getMovie, addMovie, editMovie, removeMovie } from '../movie/Movie.Actions';
 
 class Administration extends Component {
-  getChildContext() {
-    return { router: this.props.router };
-  }
-  renderAdminPage(requiredGroup, groups) {
+  renderAdminPage = (requiredGroup, groups) => {
     if (groups.indexOf('ADMIN') !== -1 && requiredGroup === 'admin') {
       const { token } = this.props;
       return (
@@ -24,7 +17,7 @@ class Administration extends Component {
     }
   }
 
-  renderModeratorPage(requiredGroup, groups) {
+  renderModeratorPage = (requiredGroup, groups) => {
     if (groups.indexOf('MODERATOR') !== -1 && requiredGroup === 'moderator') {
       return (
         <ModeratorPage/>
@@ -49,12 +42,7 @@ class Administration extends Component {
 Administration.propTypes = {
   routeParams: PropTypes.object,
   groups: PropTypes.object,
-  token: PropTypes.string,
-  router: PropTypes.object
-};
-
-Administration.childContextTypes = {
-  router: PropTypes.object
+  token: PropTypes.string
 };
 
 export default connect((store) => {
