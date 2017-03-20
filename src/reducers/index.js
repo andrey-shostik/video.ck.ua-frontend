@@ -1,15 +1,17 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
-import content from '../content/content.Reducer';
-import signIn from '../signIn/signIn.Reducer';
-import signUp from '../signUp/signUp.Reducer';
+import content from '../content/Content.Reducer';
+import signIn from '../signIn/SignIn.Reducer';
+import signUp from '../signUp/SignUp.Reducer';
+import movie from '../movie/Movie.Reducer';
 
 const rootReducer = combineReducers({
   content,
   routing,
   signUp,
-  signIn
+  signIn,
+  movie
 });
 
 export default rootReducer;

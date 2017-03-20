@@ -1,23 +1,15 @@
-import React, { Component, PropTypes } from 'react';
-import UsersTable from './usersTable';
+import React, { Component } from 'react';
+import MoviesTable from './moviesTable';
+import './adminPage.scss';
 
 class AdminPage extends Component {
-  componentWillMount() {
-    const { boundGetContent } = this.props;
-    boundGetContent();
-  }
-
   render() {
-    const { movies } = this.props;
     return (
-      <UsersTable movies={movies}/>
+      <div className="container">
+        <MoviesTable/>
+      </div>
     );
   }
 }
-
-AdminPage.propTypes = {
-  boundGetContent: PropTypes.func,
-  movies: PropTypes.array
-};
 
 export default AdminPage;

@@ -1,13 +1,14 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getMovies } from '../../content/content.Actions';
-import Item from '../item/item';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { getMovie } from './Movie.Actions';
+import Item from '../components/item/item';
 
 class Movie extends Component {
   componentWillMount() {
-    const { boundGetContent } = this.props;
-    boundGetContent(localStorage.getItem('id_token'));
+    const { boundGetMovie, routeParams: { id } } = this.props;
+    boundGetMovie(id);
   }
 
   render() {
@@ -16,7 +17,7 @@ class Movie extends Component {
     return (
       <div>
         <div className="flex-container flex-section">
-          <Item watch={false} movie={movie}/>
+          <Item watch={false} movie={movie.toJS()}/>
         </div>
       </div>
     );
@@ -24,16 +25,17 @@ class Movie extends Component {
 }
 
 Movie.propTypes = {
-  movie: PropTypes.object,
-  boundGetContent: PropTypes.func
+  movie: ImmutablePropTypes.map,
+  boundGetMovie: PropTypes.func,
+  routeParams: PropTypes.object
 };
 
 export default connect((store, ownProps) => {
   return {
-    movie: store.content.get('movies').find((movie) => { return movie._id === ownProps.params.id; })
+    movie: store.movie.get('movie')
   };
 }, (dispatch) => {
   return {
-    boundGetContent: bindActionCreators(getMovies, dispatch)
+    boundGetMovie: bindActionCreators(getMovie, dispatch)
   };
 })(Movie);

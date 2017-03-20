@@ -1,15 +1,80 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0px;
+  background-color: #EEEEEE; }
+
+.flex-container {
+  display: flex; }
 .app {
   margin: 0 auto;
   width: 760px;
   height: 500px; }
 
-.flex-container {
-  display: flex;
+.flex-section {
   justify-content: center;
   align-items: center;
   flex-direction: column; }
 
 .flex-element {
   padding: 10px; }
+
+.material-navbar {
+  position: fixed !important; }
+.section-element {
+  width: 500px;
+  height: 225px;
+  margin: 25px;
+  padding: 25px;
+  border-radius: 3px;
+  background-color: white; }
+
+.pagination {
+  display: flex;
+  list-style: none; }
+  .pagination li {
+    cursor: pointer;
+    margin: 2px;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: white;
+    border: 1px solid grey; }
+    .pagination li:hover {
+      background-color: grey; }
+.item-container > div {
+  margin-bottom: 10px;
+  margin-left: 25px; }
+.user-not-authorized {
+  align-items: center;
+  justify-content: center; }
+.not-found-code {
+  font-size: 64px; }
+
+.not-found-flex {
+  align-items: center;
+  flex-direction: column; }
+
+.not-found-element {
+  margin: 10px 0px; }
+.app-form {
+  padding: 30px;
+  margin-top: 30px;
+  flex-direction: column;
+  width: 300px;
+  height: 280px;
+  background-color: white;
+  border-radius: 3px;
+  align-items: center; }
+
+.form-container {
+  justify-content: center; }
+
+.form-btn {
+  margin-top: 30px; }
+.data-actions-menu {
+  justify-content: space-around;
+  margin-top: 10px;
+  margin-bottom: 25px; }
+.container {
+  margin: 25px 25px; }
 
 /*# sourceMappingURL=main.css.map*/

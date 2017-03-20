@@ -1,17 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
+// import ImmutablePropTypes from 'react-immutable-proptypes';
 import ModeratorPage from './components/moderatorPage';
 import AdminPage from './components/adminPage';
-import { getMovies } from '../content/content.Actions';
+// import { getMovies } from '../content/Content.Actions';
+// import { getMovie, addMovie, editMovie, removeMovie } from '../movie/Movie.Actions';
 
 class Administration extends Component {
+  getChildContext() {
+    return { router: this.props.router };
+  }
   renderAdminPage(requiredGroup, groups) {
     if (groups.indexOf('ADMIN') !== -1 && requiredGroup === 'admin') {
+      const { token } = this.props;
       return (
         <AdminPage
-          movies={this.props.movies}
-          boundGetContent={this.props.boundGetContent}
+          token={token}
         />
       );
     } else {
@@ -25,7 +30,7 @@ class Administration extends Component {
         <ModeratorPage/>
       );
     } else {
-      return false;
+      return null;
     }
   }
 
@@ -43,19 +48,19 @@ class Administration extends Component {
 
 Administration.propTypes = {
   routeParams: PropTypes.object,
-  boundGetContent: PropTypes.func,
-  movies: PropTypes.array,
-  groups: PropTypes.object
+  groups: PropTypes.object,
+  token: PropTypes.string,
+  router: PropTypes.object
+};
+
+Administration.childContextTypes = {
+  router: PropTypes.object
 };
 
 export default connect((store) => {
   return {
-    movies: store.content.get('movies'),
-    groups: store.signIn.get('groups')
-  };
-}, (dispatch) => {
-  return {
-    boundGetContent: bindActionCreators(getMovies, dispatch)
+    groups: store.signIn.get('groups'),
+    token: store.signIn.get('token')
   };
 })(Administration);
 

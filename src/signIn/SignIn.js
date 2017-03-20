@@ -4,15 +4,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import './signIn.scss';
-import { signIn } from './signIn.Actions';
+import './SignIn.scss';
+import { signIn } from './SignIn.Actions';
 
 class SignIn extends Component {
-  constructor(props) {
-    super(props);
-    this.onSignIn = this.onSignIn.bind(this);
-  }
-
   componentWillReceiveProps({ signInState }) {
     if (signInState.get('token') && signInState.get('token')) {
       localStorage.setItem('id_token', signInState.get('token'));
@@ -21,8 +16,8 @@ class SignIn extends Component {
     }
   }
 
-  onSignIn(e) {
-    const { boundSignIn, signInState } = this.props;
+  onSignIn = (e) => {
+    const { boundSignIn } = this.props;
     boundSignIn({
       email: this.emailField.input.value,
       password: this.passwordField.input.value

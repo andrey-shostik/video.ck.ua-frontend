@@ -1,10 +1,13 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: './dist/main.js'
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: 'dist',
+    filename: 'main.js'
   },
   resolve: {
     modulesDirectories: ['node_modules']
@@ -15,7 +18,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js/,
-        loaders: ['react-hot', 'babel-loader'],
+        loaders: ['babel-loader'],
         exclude: /node_modules/
       },
       {
@@ -29,7 +32,11 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    historyApiFallback: true,
-    port: 3000
-  }
+    hot: true,
+    port: 3000,
+    colors: true,
+    historyApiFallback:{
+      index:'index.html'
+    },
+  },
 };

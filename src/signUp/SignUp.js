@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import { signUp } from './signUp.Actions';
+import { signUp } from './SignUp.Actions';
 
 class SignUp extends Component {
   constructor(props) {

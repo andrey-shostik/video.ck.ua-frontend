@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Section from '../components/listContainer/listContainer';
-import { getMovies } from './content.Actions';
-import './content.scss';
+import { getMovies } from './Content.Actions';
+import './Content.scss';
 import UserNotAuthorized from '../components/userNotAuthorized/userNotAuthorized';
 
 class Content extends Component {
@@ -20,7 +20,7 @@ class Content extends Component {
 
     if (token) {
       return (
-        <Section data={movies}/>
+        <Section data={movies.toJS()}/>
       );
     } else {
       return (
@@ -31,10 +31,7 @@ class Content extends Component {
 }
 
 Content.propTypes = {
-  movies: PropTypes.oneOfType([
-    PropTypes.array,
-    ImmutablePropTypes.list
-  ]),
+  movies: ImmutablePropTypes.list,
   boundGetContent: PropTypes.func,
   token: PropTypes.string
 };

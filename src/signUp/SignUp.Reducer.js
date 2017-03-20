@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import createReducer from '../utils/utils';
-import { SIGN_UP_SUCCESS } from './signUp.Actions';
+import { SIGN_UP_SUCCESS } from './SignUp.Actions';
 
 const initialState = {
   signUp: {}
