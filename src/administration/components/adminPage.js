@@ -16,7 +16,7 @@ class AdminPage extends Component {
     return (
       <div className="container">
         <Tabs>
-          <Tab label="Movies" >
+          <Tab label="Movies">
             <AdministrationTable
               boundGetData={boundGetMovies}
               boundRemoveData={boundRemoveMovie}
@@ -25,7 +25,7 @@ class AdminPage extends Component {
               group="admin"
             />
           </Tab>
-          <Tab label="Users" >
+          <Tab label="Users">
             <AdministrationTable
               boundGetData={boundGetUsers}
               boundRemoveData={boundRemoveUser}

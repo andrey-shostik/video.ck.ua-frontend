@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import createReducer from '../utils/utils';
-import { MOVIES_GET_SUCCESS } from './Content.Actions';
+import { MOVIES_GET_SUCCESS, MOVIES_GET_FAILURE } from './Content.Actions';
 
 const initialState = {
   movies: []

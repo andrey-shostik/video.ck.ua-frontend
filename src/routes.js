@@ -9,13 +9,12 @@ import SignUp from './signUp/SignUp';
 import Administration from './administration/Administration';
 import CheckAuth from './components/checkAuth/checkAuth';
 import FormMovie from './administration/components/formMovie/formMovie';
-// import ListContainer from './components/listContainer/listContainer';
+import FormUser from './administration/components/formUser/formUser';
 
 export default (
   <Route>
     <Route path="/" component={App}>
       <IndexRoute component={Content}/>
-      <Route path="content" component={Content}/>
       <Route path="movies/:id" component={Movie}/>
       <Route path="signin" component={SignIn}/>
       <Route path="signup" component={SignUp}/>
@@ -24,7 +23,7 @@ export default (
         <Route path="administration/:group">
           <Route path="movies/new" component={FormMovie}/>
           <Route path="movies/:id/edit" component={FormMovie}/>
-          <Route path="users/:id/new" component={FormMovie}/>
+          <Route path="users/:id/edit" component={FormUser}/>
         </Route>
       </Route>
     </Route>

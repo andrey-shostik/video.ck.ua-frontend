@@ -32,60 +32,45 @@ class AdministrationTable extends Component {
   };
 
   mapMovies = (movies) => {
-    const tableRows = movies.map((object) => {
-      const cells = Object.entries(object).map((arr, i) => {
-        // [0: 'property', 1: 'value']
-        if (arr[0][0] !== '_') {
-          switch (arr[0]) {
-            case 'img':
-              return (
-                <TableRowColumn key={i}>
-                  <img alt="movie" height="110px" width="80px" src={arr[1]}/>
-                </TableRowColumn>
-              );
-            case 'name':
-              return (
-                <TableRowColumn style={{ fontSize: '14px' }} key={i} >
-                  <Link to={`/movies/${object._id}`}> {arr[1]} </Link>
-                </TableRowColumn>
-              );
-            default:
-              return <TableRowColumn style={{ fontSize: '14px' }} key={i} >{arr[1]}</TableRowColumn>;
-          }
-        } else {
-          return false;
-        }
-      });
-      return <TableRow key={object._id}>{cells}</TableRow>;
+    const tableRows = movies.map((movie) => {
+      if (Object.values(movie).length > 1) {
+        return (
+          <TableRow key={movie._id} className="administrationRowData">
+            <TableRowColumn>
+              <img alt="movie" height="110px" width="80px" src={movie.img}/>
+            </TableRowColumn>
+
+            <TableRowColumn style={{ fontSize: '14px' }}>
+              <Link to={`/movies/${movie._id}`}>{movie.name}</Link>
+            </TableRowColumn>
+
+            <TableRowColumn>{movie.originalName}</TableRowColumn>
+            <TableRowColumn>{movie.country}</TableRowColumn>
+            <TableRowColumn>{movie.releaseDate}</TableRowColumn>
+            <TableRowColumn>{movie.during}</TableRowColumn>
+          </TableRow>
+        );
+      } else {
+        return false;
+      }
     });
 
     return tableRows;
   };
 
   mapUsers = (users) => {
-    const tableRows = users.map((object) => {
-      const cells = Object.entries(object).map((arr, i) => {
-        // [0: 'property', 1: 'value']
-        if (arr[0][0] !== '_' && arr[0] !== 'password') {
-          switch (arr[0]) {
-            case 'groups':
-              return (
-                <TableRowColumn style={{ fontSize: '14px' }} key={i} > {arr[1].join(' ')} </TableRowColumn>
-              );
-            case 'username':
-              return (
-                <TableRowColumn style={{ fontSize: '14px' }} key={i} >
-                  <Link to={`/users/${object._id}`}> {arr[1]} </Link>
-                </TableRowColumn>
-              );
-            default:
-              return <TableRowColumn style={{ fontSize: '14px' }} key={i} >{arr[1]}</TableRowColumn>;
-          }
-        } else {
-          return false;
-        }
-      });
-      return <TableRow key={object._id}>{cells}</TableRow>;
+    const tableRows = users.map((user) => {
+      if (Object.values(user).length > 1) {
+        return (
+          <TableRow key={user._id} className="administrationRowData">
+            <TableRowColumn>{ user.username }</TableRowColumn>
+            <TableRowColumn>{ user.email }</TableRowColumn>
+            <TableRowColumn>{ user.groups.join(', ') }</TableRowColumn>
+          </TableRow>
+        );
+      } else {
+        return null;
+      }
     });
 
     return tableRows;

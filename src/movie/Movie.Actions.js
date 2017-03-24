@@ -1,10 +1,10 @@
 import { CALL_API } from 'redux-api-middleware';
 
 // CRUD
-export const MOVIE_GET_SUCCESS = 'MOVIE_GET_SUCCESS';
 export const MOVIE_ADD_SUCCESS = 'MOVIE_ADD_SUCCESS';
-export const MOVIE_REMOVE_SUCCESS = 'MOVIE_REMOVE_SUCCESS';
+export const MOVIE_GET_SUCCESS = 'MOVIE_GET_SUCCESS';
 export const MOVIE_EDIT_SUCCESS = 'MOVIE_EDIT_SUCCESS';
+export const MOVIE_REMOVE_SUCCESS = 'MOVIE_REMOVE_SUCCESS';
 
 export const getMovie = (id) => {
   return {

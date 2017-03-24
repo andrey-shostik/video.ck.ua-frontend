@@ -6,20 +6,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { signUp } from './SignUp.Actions';
 
 class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.onSignUp = () => {
-      const { boundSignUp, signUpState } = this.props;
-      boundSignUp({
-        username: this.usernameField.input.value,
-        email: this.emailField.input.value,
-        password: this.passwordField.input.value
-      });
-    };
-  }
+  onSignUp = () => {
+    const { boundSignUp, signUpState } = this.props;
+    boundSignUp({
+      username: this.usernameField.input.value,
+      email: this.emailField.input.value,
+      password: this.passwordField.input.value
+    });
+  };
 
   componentWillReceiveProps({ signUpState }) {
-    if (signUpState.get('signUp').token) {
+    if (signUpState.toJS().signUp) {
       this.props.router.push('/signin');
     }
   }
@@ -49,7 +46,8 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   boundSignUp: PropTypes.func,
-  signUpState: PropTypes.object
+  signUpState: PropTypes.object,
+  router: PropTypes.object
 };
 
 export default connect((store) => {

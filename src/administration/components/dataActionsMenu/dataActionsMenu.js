@@ -22,12 +22,7 @@ const DataActionsMenu = ({ show, boundRemoveData, dataType, selected, boundGetDa
       { show
         ?
           <div className="data-actions-menu flex-container">
-            { dataType !== 'users'
-              ?
-                <RaisedButton label="Edit" onTouchTap={onEditAction} style={{ width: '50%', marginRight: '5px' }}/>
-              :
-                null
-            }
+            <RaisedButton label="Edit" onTouchTap={onEditAction} style={{ width: '50%', marginRight: '5px' }}/>
             <RaisedButton label="Remove" onTouchTap={onRemoveAction} style={{ width: '50%', marginLeft: '5px' }}/>
           </div>
         :
