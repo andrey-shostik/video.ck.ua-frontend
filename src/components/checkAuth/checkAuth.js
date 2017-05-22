@@ -6,24 +6,20 @@ import UserHasNotAccess from '../userHasNotAccess/userHasNotAccess';
 
 class CheckAuth extends Component {
   render() {
-    const { route: { requiredGroups }, groups } = this.props;
+    const { route: { requiredGroups }, groups, children } = this.props;
     const hasAccess = checkAccess(requiredGroups, groups.toJS());
 
-    if (hasAccess) {
-      return this.props.children;
-    } else {
-      return <UserHasNotAccess/>;
-    }
+    return hasAccess ? children : <UserHasNotAccess/>;
   }
 }
 
 CheckAuth.propTypes = {
-  route: PropTypes.object,
+  route : PropTypes.object,
   groups: ImmutablePropTypes.list
 };
 
-export default connect((store) => {
+export default connect(({signIn}) => {
   return {
-    groups: store.signIn.get('groups')
+    groups: signIn.get('groups')
   };
 })(CheckAuth);
