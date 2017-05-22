@@ -12,9 +12,7 @@ class FormUser extends Component {
   componentWillMount() {
     const { boundGetUser } = this.props;
     const { router: { params } } = this.context;
-    if (params.id) {
-      boundGetUser(params.id);
-    }
+    params.id && boundGetUser(params.id);
   }
 
   componentWillReceiveProps() {
@@ -27,7 +25,7 @@ class FormUser extends Component {
 
     const user = {
       username: this.username.input.value,
-      groups: this.groups.input.value
+      groups  : this.groups.input.value
     };
 
     boundEditUser(router.params.id, user);
@@ -35,30 +33,16 @@ class FormUser extends Component {
 
 
   mapUserFileds = (user) => {
-    if (Object.values(user).length > 1) {
-      const userFields = new Array(2);
-
-      userFields.push(
-        <TextField
-          floatingLabelText="Username"
-          fullWidth
-          ref={(username) => { this.username = username; }}
-          defaultValue={user.username}
-          key="1"
-        />
-      );
-
-      userFields.push(
-        <TextField
-          floatingLabelText="Groups"
-          fullWidth
-          ref={(groups) => { this.groups = groups; }}
-          defaultValue={user.groups}
-          key="2"
-        />
-      );
-
-      return userFields;
+    if (Object.values(user).length === 2) {
+      return Array(2).map((value, i) => {
+        return  <TextField
+                  fullWidth
+                  floatingLabelText = { i === 1          ? "Username" : "Groups"                       }
+                  ref               = { field => i === 1 ? this.username = field : this.groups = field }
+                  defaultValue      = { i === 1          ? user.username : user.groups                 }
+                  key={i}
+                />
+      })
     } else {
       return null;
     }
@@ -91,8 +75,8 @@ class FormUser extends Component {
 }
 
 FormUser.propTypes = {
-  user: ImmutablePropTypes.map,
-  boundGetUser: PropTypes.func,
+  user         : ImmutablePropTypes.map,
+  boundGetUser : PropTypes.func,
   boundEditUser: PropTypes.func
 };
 
@@ -100,13 +84,13 @@ FormUser.contextTypes = {
   router: PropTypes.object
 };
 
-export default connect((store) => {
+export default connect(({ user }) => {
   return {
     user: store.user.get('user')
   };
 }, (dispatch) => {
   return {
-    boundGetUser: bindActionCreators(getUser, dispatch),
+    boundGetUser : bindActionCreators(getUser, dispatch),
     boundEditUser: bindActionCreators(editUser, dispatch)
   };
 })(FormUser);
