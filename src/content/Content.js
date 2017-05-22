@@ -18,26 +18,18 @@ class Content extends Component {
     const { boundGetContent, token } = this.props;
     if (token) {
       boundGetContent(token).then((res) => {
-        console.log(res);
-        if (res.error) {
-          this.setState({ renderNotAuthorized: true });
-        }
+        res.error ? this.setState({ renderNotAuthorized: true });
       });
     }
   }
 
   movies = () => {
-    const movies = this.props.movies.toJS().map((movie) => {
-      return (
-        <Item watch movie={movie} key={movie._id}/>
-      );
+    return this.props.movies.toJS().map((movie) => {
+      return <Item watch movie={movie} key={movie._id}/>
     });
-
-    return movies;
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         { this.state.renderNotAuthorized
@@ -52,15 +44,15 @@ class Content extends Component {
 }
 
 Content.propTypes = {
-  movies: ImmutablePropTypes.list,
+  movies         : ImmutablePropTypes.list,
   boundGetContent: PropTypes.func,
-  token: PropTypes.string
+  token          : PropTypes.string
 };
 
-export default connect((store, ownProps) => {
+export default connect(({content, signIn}, ownProps) => {
   return {
-    movies: store.content.get('movies'),
-    token: store.signIn.get('token')
+    movies: content.get('movies'),
+    token : signIn.get('token')
   };
 }, (dispatch) => {
   return {
