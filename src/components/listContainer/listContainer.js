@@ -5,11 +5,7 @@ class listContainer extends Component {
   render() {
     const { data } = this.props;
 
-    return (
-      <div className="flex-container flex-section">
-        { data }
-      </div>
-    );
+    return <div className="flex-container flex-section">{ data }</div>;
   }
 }
 
