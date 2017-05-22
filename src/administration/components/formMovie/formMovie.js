@@ -11,9 +11,7 @@ class FormMovie extends Component {
   componentWillMount() {
     const { boundGetMovie } = this.props;
     const { router: { params } } = this.context;
-    if (params.id) {
-      boundGetMovie(params.id);
-    }
+    params.id && boundGetMovie(params.id);
   }
 
   onAction = () => {
@@ -29,20 +27,10 @@ class FormMovie extends Component {
       country: this.country.input.value
     };
 
-    if (this.getAction() === 'edit') {
-      boundEditMovie(router.params.id, movie);
-    } else {
-      boundAddMovie(movie);
-    }
+    this.getAction() === 'edit' ? boundEditMovie(router.params.id, movie) : boundAddMovie(movie);
   }
 
-  getAction = () => {
-    if (this.context.router.params.id) {
-      return 'edit';
-    } else {
-      return 'new';
-    }
-  }
+  getAction = () => this.context.router.params.id ? 'edit' : 'new';
 
   mapMovieFileds = (movie) => {
     const sampleMovie = {
@@ -107,14 +95,13 @@ FormMovie.propTypes = {
   boundEditMovie: PropTypes.func
 };
 
-
 FormMovie.contextTypes = {
   router: PropTypes.object
 };
 
-export default connect((store) => {
+export default connect(({movie}) => {
   return {
-    movie: store.movie.get('movie')
+    movie: movie.get('movie')
   };
 }, (dispatch) => {
   return {
